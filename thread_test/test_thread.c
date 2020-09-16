@@ -15,7 +15,7 @@ int done = 1;
 
 
 // Thread function 
-void* bar(void* a) 
+void bar() 
 { 
 		// Let's signal condition variable cond1 
 		printf("Signaling condition variable cond1\n"); 
@@ -24,8 +24,7 @@ void* bar(void* a)
 
 // Thread function 
 void* foo() 
-{ 
-
+{
 	// acquire a lock 
 	pthread_mutex_lock(&lock); 
 	printf("Waiting on condition variable cond1\n");
@@ -36,7 +35,7 @@ void* foo()
 	printf("Returning thread\n"); 
 
 	return NULL; 
-} 
+}
 
 
 
@@ -52,8 +51,9 @@ int main()
 	// would get a chance to run first 
 	sleep(1); 
 
+	bar();
 	// Create thread 2 
-	pthread_create(&tid2, NULL, bar, NULL); 
+	//pthread_create(&tid2, NULL, bar, NULL); 
 
 	// wait for the completion of thread 2 
 	pthread_join(tid1, NULL); 
